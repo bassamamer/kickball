@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kick_ball/helpers/constant_helper.dart';
-import 'package:kick_ball/modules/auth/views/auth_view.dart';
+import 'package:kick_ball/modules/playground_details/view/payment_approved.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'KickBall',
             theme: AppThemes.appTheme,
-            home: const AuthView(),
+            home: const PaymentApproved(),
           );
         });
   }

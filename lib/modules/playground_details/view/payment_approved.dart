@@ -12,6 +12,7 @@ class PaymentApproved extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+          height: 2000.h,
           color: AppColors.secondary,
           padding: EdgeInsets.symmetric(vertical: 100.h, horizontal: 50.w),
           child: Row(

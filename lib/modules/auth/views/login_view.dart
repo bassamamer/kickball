@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:kick_ball/helpers/constant_helper.dart';
+
+import '../../../helpers/binding_helper.dart';
 
 class LoginView extends StatelessWidget {
   final GlobalKey<FormBuilderState> _loginFormKey =
@@ -52,29 +55,26 @@ class LoginView extends StatelessWidget {
                       ),
                     ),
                     50.verticalSpace,
-                    Text(AppStrings.forgetPassword,
-                        style: Theme.of(context).textTheme.headlineSmall),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.toNamed(AppRoutes.emailResetPageURL);
+                        },
+                        child: Text(AppStrings.forgetPassword,
+                            style: Theme.of(context).textTheme.headlineSmall),
+                      ),
+                    ),
                     32.verticalSpace,
                     SizedBox(
                       width: 500.w,
                       child: ElevatedButton(
-                          onPressed: () {}, child: Text(AppStrings.signIn)),
+                        onPressed: () {
+                          Get.offAndToNamed(AppRoutes.homeURL);
+                        },
+                        child: const Text(AppStrings.signIn),
+                      ),
                     ),
-                    // 32.verticalSpace,
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Text(
-                    //       AppStrings.dontHaveAccount,
-                    //       style: Theme.of(context).textTheme.titleLarge,
-                    //     ),
-                    //     4.horizontalSpace,
-                    //     Text(AppStrings.signIn,
-                    //         style: getSemiBoldTextStyle(
-                    //             color: AppColors.primary,
-                    //             fontSize: FontSize.s20))
-                    //   ],
-                    // ),
                   ],
                 )),
           ],

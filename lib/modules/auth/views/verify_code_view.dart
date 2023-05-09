@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../../helpers/binding_helper.dart';
 import '../../../helpers/constant_helper.dart';
 
 class VerifyCodeView extends StatelessWidget {
@@ -58,7 +60,9 @@ class VerifyCodeView extends StatelessWidget {
                   SizedBox(
                     width: 300.w,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.newPasswordPageURL);
+                        },
                         child: const Text(AppStrings.confirm)),
                   )
                 ],

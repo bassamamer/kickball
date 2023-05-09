@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../../helpers/binding_helper.dart';
 import '../../../helpers/constant_helper.dart';
 import '../../../helpers/styles_manager.dart';
 
@@ -43,7 +45,10 @@ class EmailResetView extends StatelessWidget {
                       SizedBox(
                         width: 150.w,
                         child: ElevatedButton(
-                            onPressed: () {}, child: Text(AppStrings.send)),
+                            onPressed: () {
+                              Get.toNamed(AppRoutes.verifyCodePageURL);
+                            },
+                            child: const Text(AppStrings.send)),
                       ),
                     ],
                   ),
@@ -70,7 +75,9 @@ class EmailResetView extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(15.w),
                                     side: const BorderSide(
                                         color: AppColors.primary))),
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.back();
+                            },
                             child: const Text(AppStrings.signUp)),
                       )
                     ],

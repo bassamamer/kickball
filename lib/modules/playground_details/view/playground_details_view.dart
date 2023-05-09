@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:kick_ball/helpers/constant_helper.dart';
 import 'package:kick_ball/helpers/styles_manager.dart';
 import 'package:kick_ball/modules/playground_details/models/playground_model.dart';
+import 'package:kick_ball/modules/playground_details/view/widgets/available_times.dart';
 import 'package:kick_ball/modules/playground_details/view/widgets/payment_options_list.dart';
 import 'package:kick_ball/modules/widgets/home_app_bar.dart';
+
+import '../../../helpers/binding_helper.dart';
 
 class PlayGroundDetailsView extends StatelessWidget {
   const PlayGroundDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // final PlayGroundModel playGround = Get.arguments as PlayGroundModel;
+    final PlayGroundModel playGround = PlayGroundModel.playgrounds[0];
+
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
@@ -25,29 +32,23 @@ class PlayGroundDetailsView extends StatelessWidget {
                 Row(
                   children: [
                     Image(
-                      image:
-                          AssetImage(PlayGroundModel.playgrounds[0].imageUrl),
+                      image: AssetImage(playGround.imageUrl),
                     ),
                     40.horizontalSpace,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        _buildDetailsRow('Location: ',
-                            PlayGroundModel.playgrounds[0].location),
-                        20.verticalSpace,
-                        _buildDetailsRow('Price: ',
-                            "${PlayGroundModel.playgrounds[0].hourPrice} L.E/Hour"),
+                        _buildDetailsRow('Location: ', playGround.location),
                         20.verticalSpace,
                         _buildDetailsRow(
-                            'Number of team players: ',
-                            PlayGroundModel.playgrounds[0].playerNum
-                                .toString()),
+                            'Price: ', "${playGround.hourPrice} L.E/Hour"),
                         20.verticalSpace,
-                        _buildDetailsRow(
-                            'Working hours: ',
-                            PlayGroundModel.playgrounds[0].workingTime
-                                .toString()),
+                        _buildDetailsRow('Number of team players: ',
+                            playGround.playerNum.toString()),
+                        20.verticalSpace,
+                        _buildDetailsRow('Working hours: ',
+                            playGround.workingTime.toString()),
                         20.verticalSpace,
                         ElevatedButton(
                             onPressed: () {}, child: const Text('Map Location'))
@@ -55,6 +56,8 @@ class PlayGroundDetailsView extends StatelessWidget {
                     )
                   ],
                 ),
+                100.verticalSpace,
+                const AvailableTimes(),
                 100.verticalSpace,
                 SizedBox(
                   width: 150.w,
@@ -131,6 +134,25 @@ class PlayGroundDetailsView extends StatelessWidget {
                         Text('Pay ${PlayGroundModel.playgrounds[0].hourPrice}'),
                   ),
                 ),
+                40.verticalSpace,
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ElevatedButton(
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.approvePageURL);
+                        },
+                        child: const Text("Approve Screen")),
+                    20.horizontalSpace,
+                    ElevatedButton(
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.declinePageURL);
+                        },
+                        child: const Text("Decline Screen"))
+                  ],
+                )
               ],
             ),
           )

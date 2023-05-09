@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:kick_ball/helpers/binding_helper.dart';
 import 'package:kick_ball/helpers/constant_helper.dart';
 import 'package:kick_ball/modules/playground_details/models/playground_model.dart';
 
@@ -40,6 +42,11 @@ class PaymentApproved extends StatelessWidget {
                   ),
                 ),
                 50.verticalSpace,
+                Text(
+                  'Payment Approved',
+                  style: getBoldTextStyle(color: Colors.black, fontSize: 60.sp),
+                ),
+                50.verticalSpace,
                 Image(
                   image: const AssetImage(
                     AppAssets.accepted,
@@ -55,7 +62,9 @@ class PaymentApproved extends StatelessWidget {
                 ),
                 50.verticalSpace,
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.offAllNamed(AppRoutes.homeURL);
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF0099EF)),
                   child: const Text("Back to Home"),

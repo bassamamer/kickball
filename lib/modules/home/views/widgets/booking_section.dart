@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:kick_ball/helpers/binding_helper.dart';
 import 'package:kick_ball/helpers/constant_helper.dart';
 import 'package:kick_ball/helpers/styles_manager.dart';
 
@@ -29,20 +31,18 @@ class BookingSection extends StatelessWidget {
                     ),
                   ),
                   10.horizontalSpace,
-                  Image(
-                    image: const AssetImage(
-                      AppAssets.filterIcon,
-                    ),
-                    width: 46.w,
-                    height: 46.h,
-                  )
-                  // IconButton(
-                  //     onPressed: () {},
-                  //     icon: Icon(
-                  //       Icons.filter_list,
-                  //       color: AppColors.grey,
-                  //       size: 30.w,
-                  //     ))
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Get.dialog(const FilterDialog());
+                  //   },
+                  //   child: Image(
+                  //     image: const AssetImage(
+                  //       AppAssets.filterIcon,
+                  //     ),
+                  //     width: 46.w,
+                  //     height: 46.h,
+                  //   ),
+                  // )
                 ],
               ),
             ),
@@ -86,7 +86,11 @@ class BookingSection extends StatelessWidget {
                         SizedBox(
                           width: 300.w,
                           child: ElevatedButton(
-                              onPressed: () {}, child: const Text("Book Now")),
+                              onPressed: () {
+                                Get.toNamed(AppRoutes.playGroundDetailsPageURL,
+                                    arguments: playground);
+                              },
+                              child: const Text("Book Now")),
                         )
                       ],
                     ),

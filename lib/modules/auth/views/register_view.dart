@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:kick_ball/helpers/binding_helper.dart';
 
 import '../../../helpers/constant_helper.dart';
 import '../../../helpers/styles_manager.dart';
@@ -90,23 +92,12 @@ class RegisterView extends StatelessWidget {
                             backgroundColor: Colors.white,
                             foregroundColor: AppColors.primary,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.offAndToNamed(AppRoutes.homeURL);
+                          },
                           child: const Text(AppStrings.register)),
                     ),
                     32.verticalSpace,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          AppStrings.alreadyHaveAccount,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        4.horizontalSpace,
-                        Text(AppStrings.signIn,
-                            style: getSemiBoldTextStyle(
-                                color: Colors.white, fontSize: FontSize.s20))
-                      ],
-                    ),
                   ],
                 ))
           ],

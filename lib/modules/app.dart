@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:kick_ball/helpers/constant_helper.dart';
-import 'package:kick_ball/modules/playground_details/view/payment_approved.dart';
+import 'package:kick_ball/modules/home/views/home_view.dart';
+
+import '../helpers/binding_helper.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,11 +16,14 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MaterialApp(
+          return GetMaterialApp(
+            initialRoute: AppPages.initial,
+            getPages: AppPages.pages,
+            enableLog: true,
             debugShowCheckedModeBanner: false,
             title: 'KickBall',
             theme: AppThemes.appTheme,
-            home: const PaymentApproved(),
+            home: const HomeView(),
           );
         });
   }

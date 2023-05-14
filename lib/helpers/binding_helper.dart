@@ -1,13 +1,16 @@
 import 'package:get/get.dart';
-import 'package:kick_ball/modules/auth/views/auth_view.dart';
-import 'package:kick_ball/modules/auth/views/email_reset_view.dart';
-import 'package:kick_ball/modules/auth/views/new_password_view.dart';
-import 'package:kick_ball/modules/auth/views/verify_code_view.dart';
-import 'package:kick_ball/modules/home/views/home_view.dart';
-import 'package:kick_ball/modules/playground_details/view/payment_approved.dart';
-import 'package:kick_ball/modules/playground_details/view/payment_declined.dart';
-import 'package:kick_ball/modules/playground_details/view/playground_details_view.dart';
-import 'package:kick_ball/modules/profile/view/profile_view.dart';
+import 'package:kick_ball/modules/dashboard/home/view/admin_home.dart';
+import 'package:kick_ball/modules/dashboard/users/view/owners_view.dart';
+import 'package:kick_ball/modules/dashboard/users/view/users_view.dart';
+import 'package:kick_ball/modules/user/auth/views/auth_view.dart';
+import 'package:kick_ball/modules/user/auth/views/email_reset_view.dart';
+import 'package:kick_ball/modules/user/auth/views/new_password_view.dart';
+import 'package:kick_ball/modules/user/auth/views/verify_code_view.dart';
+import 'package:kick_ball/modules/user/home/views/home_view.dart';
+import 'package:kick_ball/modules/user/playground_details/view/payment_approved.dart';
+import 'package:kick_ball/modules/user/playground_details/view/payment_declined.dart';
+import 'package:kick_ball/modules/user/playground_details/view/playground_details_view.dart';
+import 'package:kick_ball/modules/user/profile/view/profile_view.dart';
 
 class AppRoutes {
   static const homeURL = '/home';
@@ -19,6 +22,13 @@ class AppRoutes {
   static const approvePageURL = '/approve_page';
   static const declinePageURL = '/decline_page';
   static const userPageURL = '/user_page';
+
+  // [Admin]
+  static const adminHomePageUrl = '/admin_Home_page';
+  static const adminOwnersPageUrl = '/admin_owners_page';
+  static const adminUsersPageUrl = '/admin_users_page';
+  static const adminAddPlaygroundPageUrl = '/admin_add_playground_page';
+  static const adminPlaygroundsPageUrl = '/admin_playgrounds_page';
 }
 
 class AppPages {
@@ -59,6 +69,18 @@ class AppPages {
     GetPage(
       name: AppRoutes.userPageURL,
       page: () => const ProfileView(),
+    ),
+    GetPage(
+      name: AppRoutes.adminHomePageUrl,
+      page: () => const AdminHome(),
+    ),
+    GetPage(
+      name: AppRoutes.adminUsersPageUrl,
+      page: () => const UsersView(),
+    ),
+    GetPage(
+      name: AppRoutes.adminOwnersPageUrl,
+      page: () => const OwnersView(),
     ),
   ];
 }

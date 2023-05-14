@@ -37,6 +37,15 @@ class AppAssets {
   static const String accepted = '$_imagesPath/accepted.png';
   static const String declined = '$_imagesPath/declined.png';
   static const String filterIcon = '$_imagesPath/filter_icon.png';
+
+  static const String dailyReservations = '$_imagesPath/daily_reservations.png';
+  static const String fieldsReservations =
+      '$_imagesPath/fields_reservations.png';
+  static const String goal = '$_imagesPath/goal.png';
+  static const String maleUser = '$_imagesPath/male_user.png';
+  static const String plus = '$_imagesPath/plus.png';
+  static const String userShield = '$_imagesPath/user_shield.png';
+  static const String clock = '$_imagesPath/clock.png';
 }
 
 class AppStrings {

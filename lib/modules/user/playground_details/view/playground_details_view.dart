@@ -158,49 +158,35 @@ class PlayGroundDetailsView extends GetView<PlaygroundDetailsController> {
                       backgroundColor: const Color(0xff2F88FF),
                     ),
                     onPressed: () {
-                      if (!controller.paymentFormKey.currentState!
-                          .saveAndValidate()) {
-                        return;
-                      }
-                      final userVisa = CustomVisa(
-                        cardNum: controller.paymentFormKey.currentState
-                            ?.fields['card_number']?.value,
-                        expireDate: controller.paymentFormKey.currentState
-                            ?.fields['expiry_date']?.value,
-                        vcc: controller
-                            .paymentFormKey.currentState?.fields['vcc']?.value,
-                      );
-                      for (var element in CustomVisa.visaList) {
-                        if (element == userVisa) {
-                          Get.toNamed(AppRoutes.approvePageURL);
+                      if (controller.selectedPayment.value ==
+                          "Pay with Credit Card") {
+                        if (!controller.paymentFormKey.currentState!
+                            .saveAndValidate()) {
                           return;
                         }
+                        final userVisa = CustomVisa(
+                          cardNum: controller.paymentFormKey.currentState
+                              ?.fields['card_number']?.value,
+                          expireDate: controller.paymentFormKey.currentState
+                              ?.fields['expiry_date']?.value,
+                          vcc: controller.paymentFormKey.currentState
+                              ?.fields['vcc']?.value,
+                        );
+                        for (var element in CustomVisa.visaList) {
+                          if (element == userVisa) {
+                            Get.toNamed(AppRoutes.approvePageURL);
+                            return;
+                          }
+                        }
+                        Get.toNamed(AppRoutes.declinePageURL);
+                      } else {
+                        Get.toNamed(AppRoutes.approvePageURL);
                       }
-                      Get.toNamed(AppRoutes.declinePageURL);
                     },
                     child:
                         Text('Pay ${PlayGroundModel.playgrounds[0].hourPrice}'),
                   ),
                 ),
-                40.verticalSpace,
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    ElevatedButton(
-                        onPressed: () {
-                          Get.toNamed(AppRoutes.approvePageURL);
-                        },
-                        child: const Text("Approve Screen")),
-                    20.horizontalSpace,
-                    ElevatedButton(
-                        onPressed: () {
-                          Get.toNamed(AppRoutes.declinePageURL);
-                        },
-                        child: const Text("Decline Screen"))
-                  ],
-                )
               ],
             ),
           )

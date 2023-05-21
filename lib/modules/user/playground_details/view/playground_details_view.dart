@@ -1,23 +1,27 @@
+import 'dart:js' as js;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:kick_ball/helpers/constant_helper.dart';
 import 'package:kick_ball/helpers/styles_manager.dart';
+import 'package:kick_ball/modules/user/playground_details/controller/playground_details_controller.dart';
 import 'package:kick_ball/modules/user/playground_details/view/widgets/available_times.dart';
 import 'package:kick_ball/modules/user/playground_details/view/widgets/payment_options_list.dart';
 import 'package:kick_ball/modules/widgets/user_home_app_bar.dart';
 
 import '../../../../helpers/binding_helper.dart';
+import '../models/custom_visa.dart';
 import '../models/playground_model.dart';
 
-class PlayGroundDetailsView extends StatelessWidget {
+class PlayGroundDetailsView extends GetView<PlaygroundDetailsController> {
   const PlayGroundDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final PlayGroundModel playGround = Get.arguments as PlayGroundModel;
-    final PlayGroundModel playGround = PlayGroundModel.playgrounds[0];
+    final PlayGroundModel playGround = Get.arguments as PlayGroundModel;
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -39,7 +43,7 @@ class PlayGroundDetailsView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        _buildDetailsRow('Location: ', playGround.location),
+                        _buildDetailsRow('Name: ', playGround.name),
                         20.verticalSpace,
                         _buildDetailsRow(
                             'Price: ', "${playGround.hourPrice} L.E/Hour"),
@@ -51,7 +55,11 @@ class PlayGroundDetailsView extends StatelessWidget {
                             playGround.workingTime.toString()),
                         20.verticalSpace,
                         ElevatedButton(
-                            onPressed: () {}, child: const Text('Map Location'))
+                            onPressed: () {
+                              js.context
+                                  .callMethod('open', [playGround.mapLocation]);
+                            },
+                            child: const Text('Map Location'))
                       ],
                     )
                   ],
@@ -81,42 +89,62 @@ class PlayGroundDetailsView extends StatelessWidget {
                 40.verticalSpace,
                 const PaymentOptionsList(),
                 40.verticalSpace,
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: SizedBox(
-                    width: 800.w,
-                    child: FormBuilder(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          FormBuilderTextField(
-                            style: Theme.of(context).textTheme.titleLarge,
-                            name: 'card_number',
-                            decoration: const InputDecoration(
-                              hintText: "Card Number",
-                            ),
+                Obx(() {
+                  if (controller.selectedPayment.value ==
+                      "Pay with Credit Card") {
+                    return Align(
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        width: 800.w,
+                        child: FormBuilder(
+                          key: controller.paymentFormKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              FormBuilderTextField(
+                                style: Theme.of(context).textTheme.titleLarge,
+                                name: 'card_number',
+                                decoration: const InputDecoration(
+                                  labelText: "Card Number",
+                                  hintText: "Card Number",
+                                ),
+                                validator: FormBuilderValidators.compose([
+                                  FormBuilderValidators.required(
+                                      errorText: Validation.required),
+                                  // FormBuilderValidators.creditCard(
+                                  //     errorText: Validation.mustBeVisa),
+                                ]),
+                              ),
+                              20.verticalSpace,
+                              FormBuilderTextField(
+                                style: Theme.of(context).textTheme.titleLarge,
+                                name: 'expiry_date',
+                                decoration: const InputDecoration(
+                                  labelText: "Expiration Date",
+                                  hintText: "MM/YY",
+                                ),
+                                validator: FormBuilderValidators.required(
+                                    errorText: Validation.required),
+                              ),
+                              20.verticalSpace,
+                              FormBuilderTextField(
+                                style: Theme.of(context).textTheme.titleLarge,
+                                name: 'vcc',
+                                decoration: const InputDecoration(
+                                  hintText: "VCC",
+                                ),
+                                validator: FormBuilderValidators.required(
+                                    errorText: Validation.required),
+                              ),
+                            ],
                           ),
-                          20.verticalSpace,
-                          FormBuilderTextField(
-                            style: Theme.of(context).textTheme.titleLarge,
-                            name: 'expiry_date',
-                            decoration: const InputDecoration(
-                              hintText: "Expiration Date MM/YY",
-                            ),
-                          ),
-                          20.verticalSpace,
-                          FormBuilderTextField(
-                            style: Theme.of(context).textTheme.titleLarge,
-                            name: 'vcc',
-                            decoration: const InputDecoration(
-                              hintText: "VCC",
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                }),
                 40.verticalSpace,
                 Text(
                   'Total: ${PlayGroundModel.playgrounds[0].hourPrice}',
@@ -129,7 +157,27 @@ class PlayGroundDetailsView extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff2F88FF),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (!controller.paymentFormKey.currentState!
+                          .saveAndValidate()) {
+                        return;
+                      }
+                      final userVisa = CustomVisa(
+                        cardNum: controller.paymentFormKey.currentState
+                            ?.fields['card_number']?.value,
+                        expireDate: controller.paymentFormKey.currentState
+                            ?.fields['expiry_date']?.value,
+                        vcc: controller
+                            .paymentFormKey.currentState?.fields['vcc']?.value,
+                      );
+                      for (var element in CustomVisa.visaList) {
+                        if (element == userVisa) {
+                          Get.toNamed(AppRoutes.approvePageURL);
+                          return;
+                        }
+                      }
+                      Get.toNamed(AppRoutes.declinePageURL);
+                    },
                     child:
                         Text('Pay ${PlayGroundModel.playgrounds[0].hourPrice}'),
                   ),

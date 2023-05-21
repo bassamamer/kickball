@@ -6,7 +6,10 @@ import 'package:kick_ball/modules/user/auth/views/auth_view.dart';
 import 'package:kick_ball/modules/user/auth/views/email_reset_view.dart';
 import 'package:kick_ball/modules/user/auth/views/new_password_view.dart';
 import 'package:kick_ball/modules/user/auth/views/verify_code_view.dart';
+import 'package:kick_ball/modules/user/home/binding/home_binding.dart';
 import 'package:kick_ball/modules/user/home/views/home_view.dart';
+import 'package:kick_ball/modules/user/home/views/map_view.dart';
+import 'package:kick_ball/modules/user/playground_details/binding/playground_details_binding.dart';
 import 'package:kick_ball/modules/user/playground_details/view/payment_approved.dart';
 import 'package:kick_ball/modules/user/playground_details/view/payment_declined.dart';
 import 'package:kick_ball/modules/user/playground_details/view/playground_details_view.dart';
@@ -22,6 +25,7 @@ class AppRoutes {
   static const approvePageURL = '/approve_page';
   static const declinePageURL = '/decline_page';
   static const userPageURL = '/user_page';
+  static const mapPageUrl = '/map_page';
 
   // [Admin]
   static const adminHomePageUrl = '/admin_Home_page';
@@ -35,9 +39,7 @@ class AppPages {
   static const initial = AppRoutes.homeURL;
   static List<GetPage> pages = [
     GetPage(
-      name: initial,
-      page: () => const HomeView(),
-    ),
+        name: initial, page: () => const HomeView(), bindings: [HomeBinding()]),
     GetPage(
       name: AppRoutes.authPageURL,
       page: () => const AuthView(),
@@ -55,9 +57,9 @@ class AppPages {
       page: () => NewPasswordView(),
     ),
     GetPage(
-      name: AppRoutes.playGroundDetailsPageURL,
-      page: () => const PlayGroundDetailsView(),
-    ),
+        name: AppRoutes.playGroundDetailsPageURL,
+        page: () => const PlayGroundDetailsView(),
+        binding: PlaygroundDetailsBinding()),
     GetPage(
       name: AppRoutes.approvePageURL,
       page: () => const PaymentApproved(),
@@ -81,6 +83,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.adminOwnersPageUrl,
       page: () => const OwnersView(),
+    ),
+    GetPage(
+      name: AppRoutes.mapPageUrl,
+      page: () => const MapView(),
     ),
   ];
 }

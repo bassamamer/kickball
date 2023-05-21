@@ -4,10 +4,9 @@ import 'package:kick_ball/helpers/styles_manager.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Validation {
-  static const String required = 'عفواً،هذا الحقل مطلوب';
-  static const String minLength = ' عدد الأحرف المطلوب لا تقل عن ';
-  static const String maxLength = ' عدد الأحرف المطلوب لا تزيد عن ';
-  static const String match = 'الصيغة المدخلة لرقم الجوال غير صحيحة';
+  static const String required = 'This field is required';
+  static const String mustBeVisa =
+      'This field must be  a valid credit card number.';
 }
 
 class AppAssets {
@@ -27,12 +26,42 @@ class AppAssets {
   static const String twitter = '$_imagesPath/twitter.png';
   static const String userImage = '$_imagesPath/user_image.png';
 
-  static const String playground1 = '$_imagesPath/playground-1.png';
-  static const String playground2 = '$_imagesPath/playground-2.png';
-  static const String playground3 = '$_imagesPath/playground-3.png';
-  static const String playground4 = '$_imagesPath/playground-4.png';
-  static const String playground5 = '$_imagesPath/playground-5.png';
-  static const String playground6 = '$_imagesPath/playground-6.png';
+  static const String userLocation = 'assets/images/user_location.png';
+  static const String playgroundLocation =
+      'assets/images/playground_location.png';
+
+  // Badr and ElShorok
+  static const String b1 =
+      'assets/images/playgrounds_images/badr_and_shorouq/1.png';
+  static const String b2 =
+      'assets/images/playgrounds_images/badr_and_shorouq/2.png';
+  static const String b3 =
+      'assets/images/playgrounds_images/badr_and_shorouq/3.png';
+  static const String b4 =
+      'assets/images/playgrounds_images/badr_and_shorouq/4.png';
+  static const String b5 =
+      'assets/images/playgrounds_images/badr_and_shorouq/5.png';
+  static const String b6 =
+      'assets/images/playgrounds_images/badr_and_shorouq/6.png';
+  static const String b7 =
+      'assets/images/playgrounds_images/badr_and_shorouq/7.png';
+
+  // Obour
+  static const String o1 = 'assets/images/playgrounds_images/elobour/1.png';
+  static const String o2 = 'assets/images/playgrounds_images/elobour/2.png';
+  static const String o3 = 'assets/images/playgrounds_images/elobour/3.png';
+  static const String o4 = 'assets/images/playgrounds_images/elobour/4.png';
+
+  // masr gedida
+  static const String m1 = 'assets/images/playgrounds_images/masr_gedida/1.png';
+  static const String m2 = 'assets/images/playgrounds_images/masr_gedida/2.png';
+  static const String m3 = 'assets/images/playgrounds_images/masr_gedida/3.png';
+
+  // Nast City
+  static const String n1 = 'assets/images/playgrounds_images/nasr_city/1.png';
+  static const String n2 = 'assets/images/playgrounds_images/nasr_city/2.png';
+  static const String n3 = 'assets/images/playgrounds_images/nasr_city/3.png';
+  static const String n4 = 'assets/images/playgrounds_images/nasr_city/4.png';
 
   static const String accepted = '$_imagesPath/accepted.png';
   static const String declined = '$_imagesPath/declined.png';
@@ -176,7 +205,8 @@ class AppThemes {
       labelStyle:
           getMediumTextStyle(color: Colors.black, fontSize: FontSize.s20),
       // error style
-      errorStyle: getRegularTextStyle(color: Colors.red),
+      errorStyle:
+          getRegularTextStyle(color: Colors.red, fontSize: FontSize.s20),
       // enabled border
       enabledBorder: _getOutlineInputBorder(color: Colors.black),
       // focused border

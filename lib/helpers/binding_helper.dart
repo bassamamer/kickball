@@ -86,7 +86,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.mapPageUrl,
-      page: () => const MapView(),
+      page: () => MapView(),
     ),
   ];
 }

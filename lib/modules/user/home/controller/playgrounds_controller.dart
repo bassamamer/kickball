@@ -10,6 +10,8 @@ import 'package:kick_ball/helpers/constant_helper.dart';
 import 'package:kick_ball/modules/user/playground_details/models/playground_model.dart';
 
 class PlaygroundsController extends GetxController {
+  var searchingDistance = 15.0.obs;
+
   var playgrounds = PlayGroundModel.playgrounds.obs;
 
   var isLoading = false.obs;
@@ -76,6 +78,7 @@ class PlaygroundsController extends GetxController {
   }
 
   Future findNearbyPlayGrounds() async {
+    markers.clear();
     // موقع المستخدم
     userLocation = await getLocation();
 
@@ -126,8 +129,9 @@ class PlaygroundsController extends GetxController {
     for (var playground in playgrounds) {
       final distance = calculateDistance(userLocation.latitude,
           userLocation.longitude, playground.lat, playground.lng);
-      if (distance <= 15) {
-        markers.add(await playground.toMarker());
+      if (distance <= searchingDistance.value) {
+        markers.add(await playground.toMarker(
+            userLocation.latitude, userLocation.longitude));
       }
     }
 

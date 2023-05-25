@@ -36,7 +36,7 @@ class PlayGroundModel {
     required this.lat,
   });
 
-  Future<Marker> toMarker() async {
+  Future<Marker> toMarker(double userLat, double userLng) async {
     return Marker(
         markerId: MarkerId(name),
         position: LatLng(lat, lng),
@@ -44,7 +44,9 @@ class PlayGroundModel {
         icon: BitmapDescriptor.fromBytes(
             await getBytesFromAssets(AppAssets.playgroundLocation, 100, 100)),
         onTap: () {
-          js.context.callMethod('open', [mapLocation]);
+          js.context.callMethod('open', [
+            "https://www.google.com/maps/dir/?api=1&origin=$userLat,$userLng&destination=$lat,$lng&travelmode=driving"
+          ]);
         });
   }
 

@@ -82,50 +82,6 @@ class PlaygroundsController extends GetxController {
     // موقع المستخدم
     userLocation = await getLocation();
 
-    // // الشروق
-    // userLocation = Position(
-    //     longitude: 31.6243079,
-    //     latitude: 30.1437676,
-    //     timestamp: DateTime.now(),
-    //     accuracy: 2398.485590608257,
-    //     altitude: 0,
-    //     heading: 0,
-    //     speed: 0,
-    //     speedAccuracy: 0);
-
-    // العبور
-    // userLocation = Position(
-    //     longitude: 31.476296,
-    //     latitude: 30.2360693,
-    //     timestamp: DateTime.now(),
-    //     accuracy: 2398.485590608257,
-    //     altitude: 0,
-    //     heading: 0,
-    //     speed: 0,
-    //     speedAccuracy: 0);
-
-    // // مصر الجديدة
-    // userLocation = Position(
-    //     longitude: 31.3299999,
-    //     latitude: 30.1045366,
-    //     timestamp: DateTime.now(),
-    //     accuracy: 2398.485590608257,
-    //     altitude: 0,
-    //     heading: 0,
-    //     speed: 0,
-    //     speedAccuracy: 0);
-    //
-    // // مدينة نصر
-    // userLocation = Position(
-    //     longitude: 31.3443001,
-    //     latitude: 30.0500776,
-    //     timestamp: DateTime.now(),
-    //     accuracy: 2398.485590608257,
-    //     altitude: 0,
-    //     heading: 0,
-    //     speed: 0,
-    //     speedAccuracy: 0);
-
     for (var playground in playgrounds) {
       final distance = calculateDistance(userLocation.latitude,
           userLocation.longitude, playground.lat, playground.lng);
@@ -146,8 +102,11 @@ class PlaygroundsController extends GetxController {
   Future<Uint8List> getBytesFromAssets(
       String path, int width, int height) async {
     ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetHeight: height, targetWidth: width);
+    ui.Codec codec = await ui.instantiateImageCodec(
+      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
+      targetHeight: height,
+      targetWidth: width,
+    );
     ui.FrameInfo fi = await codec.getNextFrame();
     return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
         .buffer

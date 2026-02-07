@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:kick_ball/helpers/constant_helper.dart';
 import 'package:kick_ball/helpers/styles_manager.dart';
 
@@ -8,16 +8,16 @@ class FilterDialog extends StatefulWidget {
   const FilterDialog({super.key});
 
   @override
-  State<FilterDialog> createState() => _PaymentOptionsListState();
+  State<FilterDialog> createState() => _FilterDialogState();
 }
 
-class _PaymentOptionsListState extends State<FilterDialog> {
-  String _verticalGroupValue = "filter_options";
+class _FilterDialogState extends State<FilterDialog> {
+  String _verticalGroupValue = "Default";
 
   final _status = [
     "Default",
     "Price from low to high",
-    "Price from low to high",
+    "Price from high to low",
   ];
 
   @override
@@ -34,20 +34,29 @@ class _PaymentOptionsListState extends State<FilterDialog> {
           children: <Widget>[
             Text(
               "Choose Sort Option",
-              style: getMediumTextStyle(color: Colors.black, fontSize: 60.sp),
+              style: getMediumTextStyle(color: Colors.black, fontSize: 30.sp),
             ),
             40.verticalSpace,
-            RadioGroup<String>.builder(
-              textStyle: getBoldTextStyle(color: Colors.black, fontSize: 40.sp),
-              groupValue: _verticalGroupValue,
+            FormBuilderRadioGroup<String>(
+              name: 'filter_options',
+              initialValue: _verticalGroupValue,
               onChanged: (value) => setState(() {
-                _verticalGroupValue = value ?? '';
+                _verticalGroupValue = value ?? 'Default';
               }),
-              items: _status,
-              itemBuilder: (item) => RadioButtonBuilder(
-                item,
+              options: _status
+                  .map((item) => FormBuilderFieldOption(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: getBoldTextStyle(color: Colors.black, fontSize: 16.sp),
+                        ),
+                      ))
+                  .toList(),
+              activeColor: AppColors.primary,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.zero,
               ),
-              fillColor: AppColors.primary,
             ),
           ],
         ),

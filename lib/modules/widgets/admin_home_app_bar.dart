@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:kick_ball/helpers/binding_helper.dart';
 
 import '../../helpers/constant_helper.dart';
@@ -26,7 +25,7 @@ class AdminHomeAppBar extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () {
-                    Get.offAllNamed(AppRoutes.adminHomePageUrl);
+                    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.adminHomePageUrl, (route) => false);
                   },
                   child: Image(
                     image: const AssetImage(AppAssets.logoImage),
@@ -35,43 +34,39 @@ class AdminHomeAppBar extends StatelessWidget {
                   ),
                 ),
               ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, AppRoutes.homeURL);
+                },
+                child: Text(
+                  AppStrings.home,
+                  style: getRegularTextStyle(color: Colors.white, fontSize: 32),
+                ),
+              ),
+              50.horizontalSpace,
               Text(
-                "Owners",
+                AppStrings.about,
                 style: getRegularTextStyle(color: Colors.white, fontSize: 32),
               ),
               50.horizontalSpace,
               Text(
-                "Information",
-                style: getRegularTextStyle(color: Colors.white, fontSize: 32),
-              ),
-              50.horizontalSpace,
-              Text(
-                "Add field",
+                AppStrings.search,
                 style: getRegularTextStyle(color: Colors.white, fontSize: 32),
               )
             ],
           ),
           Row(
             children: [
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () {
-                    Get.offAndToNamed(AppRoutes.homeURL);
-                  },
-                  child: Text(
-                    "Home",
-                    style:
-                        getRegularTextStyle(color: Colors.white, fontSize: 32),
-                  ),
-                ),
+              const Text(
+                "Admin",
+                style: TextStyle(color: Colors.white, fontSize: 32),
               ),
               50.horizontalSpace,
               MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () {
-                    Get.toNamed(AppRoutes.userPageURL);
+                    Navigator.pushNamed(context, AppRoutes.userPageURL);
                   },
                   child: Image(
                     image: const AssetImage(AppAssets.userImage),
@@ -85,7 +80,7 @@ class AdminHomeAppBar extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () {
-                    Get.offAndToNamed(AppRoutes.authPageURL);
+                    Navigator.pushReplacementNamed(context, AppRoutes.authPageURL);
                   },
                   child: Text(
                     "Sign Out",

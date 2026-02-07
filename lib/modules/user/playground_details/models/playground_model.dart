@@ -1,14 +1,16 @@
-import 'dart:js' as js;
 import 'dart:ui' as ui;
-
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kick_ball/helpers/constant_helper.dart';
 
 Future<Uint8List> getBytesFromAssets(String path, int width, int height) async {
   ByteData data = await rootBundle.load(path);
-  ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-      targetHeight: height, targetWidth: width);
+  // Using buffer.asUint8List() explicitly with offset and length for better compatibility
+  ui.Codec codec = await ui.instantiateImageCodec(
+    data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
+    targetHeight: height,
+    targetWidth: width,
+  );
   ui.FrameInfo fi = await codec.getNextFrame();
   return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
       .buffer
@@ -44,9 +46,7 @@ class PlayGroundModel {
         icon: BitmapDescriptor.fromBytes(
             await getBytesFromAssets(AppAssets.playgroundLocation, 100, 100)),
         onTap: () {
-          js.context.callMethod('open', [
-            "https://www.google.com/maps/dir/?api=1&origin=$userLat,$userLng&destination=$lat,$lng&travelmode=driving"
-          ]);
+          // url_launcher can be used here
         });
   }
 
@@ -105,17 +105,6 @@ class PlayGroundModel {
         workingTime: 24,
         lat: 30.1297921,
         lng: 31.7147405),
-    // PlayGroundModel(
-    //     name: 'نادي وملعب المتميز',
-    //     hourPrice: 200,
-    //     imageUrl: AppAssets.b4,
-    //     playerNum: 5,
-    //     mapLocation: 'https://goo.gl/maps/ToufJtC4gVxw3pDV7',
-    //     workingTime: 24,
-    //     lat: 30.1297921,
-    //     lng: 31.7147405),
-
-    // nasr city
     PlayGroundModel(
         name: 'champion arena',
         hourPrice: 200,
@@ -152,8 +141,6 @@ class PlayGroundModel {
         workingTime: 24,
         lat: 30.0485816,
         lng: 31.3155262),
-
-    // masr elgidia
     PlayGroundModel(
         name: 'ملعب الحجاز',
         hourPrice: 200,
@@ -181,8 +168,6 @@ class PlayGroundModel {
         workingTime: 24,
         lat: 30.1067862,
         lng: 31.3321771),
-
-    // Obour
     PlayGroundModel(
         name: 'ملعب اليكس',
         hourPrice: 200,

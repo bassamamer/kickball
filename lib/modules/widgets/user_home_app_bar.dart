@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:kick_ball/helpers/binding_helper.dart';
 
 import '../../helpers/constant_helper.dart';
@@ -26,7 +25,7 @@ class UserHomeAppBar extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () {
-                    Get.offAllNamed(AppRoutes.homeURL);
+                    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.homeURL, (route) => false);
                   },
                   child: Image(
                     image: const AssetImage(AppAssets.logoImage),
@@ -57,7 +56,7 @@ class UserHomeAppBar extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () {
-                    Get.offAndToNamed(AppRoutes.adminHomePageUrl);
+                    Navigator.pushReplacementNamed(context, AppRoutes.adminHomePageUrl);
                   },
                   child: Text(
                     "Admin",
@@ -71,7 +70,7 @@ class UserHomeAppBar extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () {
-                    Get.toNamed(AppRoutes.userPageURL);
+                    Navigator.pushNamed(context, AppRoutes.userPageURL);
                   },
                   child: Image(
                     image: const AssetImage(AppAssets.userImage),
@@ -85,7 +84,7 @@ class UserHomeAppBar extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () {
-                    Get.offAndToNamed(AppRoutes.authPageURL);
+                    Navigator.pushReplacementNamed(context, AppRoutes.authPageURL);
                   },
                   child: Text(
                     "Sign Out",

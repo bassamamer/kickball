@@ -1,9 +1,7 @@
-import 'dart:js' as js;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 import 'package:kick_ball/helpers/constant_helper.dart';
 import 'package:kick_ball/helpers/styles_manager.dart';
@@ -56,8 +54,7 @@ class PlayGroundDetailsView extends GetView<PlaygroundDetailsController> {
                         20.verticalSpace,
                         ElevatedButton(
                             onPressed: () {
-                              js.context
-                                  .callMethod('open', [playGround.mapLocation]);
+                              // To open map, use url_launcher package
                             },
                             child: const Text('Map Location'))
                       ],
@@ -108,12 +105,7 @@ class PlayGroundDetailsView extends GetView<PlaygroundDetailsController> {
                                   labelText: "Card Number",
                                   hintText: "Card Number",
                                 ),
-                                validator: FormBuilderValidators.compose([
-                                  FormBuilderValidators.required(
-                                      errorText: Validation.required),
-                                  // FormBuilderValidators.creditCard(
-                                  //     errorText: Validation.mustBeVisa),
-                                ]),
+                                validator: ValidationBuilder().required(Validation.required).minLength(16).build(),
                               ),
                               20.verticalSpace,
                               FormBuilderTextField(
@@ -123,8 +115,7 @@ class PlayGroundDetailsView extends GetView<PlaygroundDetailsController> {
                                   labelText: "Expiration Date",
                                   hintText: "MM/YY",
                                 ),
-                                validator: FormBuilderValidators.required(
-                                    errorText: Validation.required),
+                                validator: ValidationBuilder().required(Validation.required).build(),
                               ),
                               20.verticalSpace,
                               FormBuilderTextField(
@@ -133,8 +124,7 @@ class PlayGroundDetailsView extends GetView<PlaygroundDetailsController> {
                                 decoration: const InputDecoration(
                                   hintText: "VCC",
                                 ),
-                                validator: FormBuilderValidators.required(
-                                    errorText: Validation.required),
+                                validator: ValidationBuilder().required(Validation.required).minLength(3).maxLength(3).build(),
                               ),
                             ],
                           ),
@@ -174,13 +164,13 @@ class PlayGroundDetailsView extends GetView<PlaygroundDetailsController> {
                         );
                         for (var element in CustomVisa.visaList) {
                           if (element == userVisa) {
-                            Get.toNamed(AppRoutes.approvePageURL);
+                            Navigator.pushNamed(context, AppRoutes.approvePageURL);
                             return;
                           }
                         }
-                        Get.toNamed(AppRoutes.declinePageURL);
+                        Navigator.pushNamed(context, AppRoutes.declinePageURL);
                       } else {
-                        Get.toNamed(AppRoutes.approvePageURL);
+                        Navigator.pushNamed(context, AppRoutes.approvePageURL);
                       }
                     },
                     child:

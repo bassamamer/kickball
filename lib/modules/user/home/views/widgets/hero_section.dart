@@ -11,9 +11,11 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 1100.h,
+      // Removed fixed height to prevent overflow and allowed content to define height
+      constraints: BoxConstraints(minHeight: 1100.h),
       color: AppColors.primary,
       child: Column(
+        mainAxisSize: MainAxisSize.min, // Ensure Column only takes needed space
         children: <Widget>[
           const UserHomeAppBar(),
           Padding(

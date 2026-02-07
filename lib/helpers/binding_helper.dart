@@ -87,6 +87,7 @@ class AppPages {
     GetPage(
       name: AppRoutes.mapPageUrl,
       page: () => MapView(),
+      // binding: HomeBinding(), // أضفت الـ Binding هنا أيضاً لضمان حقن الـ Controller في صفحة الخريطة
     ),
   ];
 }

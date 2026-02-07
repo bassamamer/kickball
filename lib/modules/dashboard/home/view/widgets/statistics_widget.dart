@@ -4,6 +4,7 @@ import 'package:kick_ball/helpers/constant_helper.dart';
 import 'package:kick_ball/helpers/styles_manager.dart';
 
 class StatisticsWidget extends StatelessWidget {
+  static const String routeName = '/statistics';
   const StatisticsWidget({super.key});
 
   @override
